@@ -1,4 +1,8 @@
+.Rprofile
 *.Rproj
+.renvignore
+.rscignore
+/renv
 
 # History files
 .Rhistory
