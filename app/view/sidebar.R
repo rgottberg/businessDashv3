@@ -1,3 +1,7 @@
+# uiOutput (to render sidebar elements in the server)
+# req(id ofuioutput)
+
+
 box::use(
     shiny[moduleServer,
           NS,
@@ -10,6 +14,8 @@ box::use(
     dplyr[filter]
     )
 
+data_orig <- rio::import("app/data/cleaned_data.csv")
+
 #' @export
 ui <- function(id){
     ns <- shiny::NS(id)
@@ -17,8 +23,8 @@ ui <- function(id){
         shinyWidgets::pickerInput(
             inputId = ns("country"),
             label = "Choose country",
-            # choices = sort(unique(data_orig$Country)),
-            choices = c("Argentina","Belgium", "Brazil"),
+            choices = sort(unique(data_orig$Country)),
+            # choices = c("Argentina","Belgium", "Brazil"),
             multiple = TRUE,
             selected = "Belgium",
             options = list(

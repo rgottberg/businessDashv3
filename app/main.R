@@ -26,9 +26,6 @@ box::use(app/view/dt)
 box::use(app/view/reactable)
 
 
-data_orig <- rio::import("app/data/cleaned_data.csv")
-
-
 # Define UI --------------------Country# Define UI ---------------------------------------------------------------
 #' @export
 ui <- function(id) {
