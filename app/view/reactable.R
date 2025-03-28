@@ -9,16 +9,16 @@ box::use(
 
 #' @export
 ui <- function(id){
-    ns <- shiny::NS(id)
-    reactable::reactableOutput(ns("table"))
+    ns <- NS(id)
+    reactableOutput(ns("table"))
 }
 
 #' @export
 server <- function(id,data){
-    shiny::moduleServer(id, function(input,output,session){
-    output$table <- reactable::renderReactable(
+    moduleServer(id, function(input,output,session){
+    output$table <- renderReactable(
         data() |>
-            reactable::reactable()
+            reactable()
         )
     }
     )

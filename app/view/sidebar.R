@@ -1,7 +1,3 @@
-# uiOutput (to render sidebar elements in the server)
-# req(id ofuioutput)
-
-
 box::use(
     shiny[moduleServer,
           NS,
@@ -10,7 +6,8 @@ box::use(
           selectInput,
           dateRangeInput,
           uiOutput,
-          renderUI],
+          renderUI,
+          req],
     shinyWidgets[pickerInput],
     rio[import],
     dplyr[filter]
@@ -18,17 +15,17 @@ box::use(
 
 #' @export
 ui <- function(id){
-    ns <- shiny::NS(id)
-    shiny::uiOutput(ns("sidebar"))
+    ns <- NS(id)
+    uiOutput(ns("sidebar"))
     }
 
 #' @export
 server <- function(id,data){
-    shiny::moduleServer(id, function(input,output,session){
-        ns <- shiny::NS(id)
-        output$sidebar <- shiny::renderUI ({
-            shiny::tagList(
-                shinyWidgets::pickerInput(
+    moduleServer(id, function(input,output,session){
+        ns <- session$ns
+        output$sidebar <- renderUI ({
+            tagList(
+                pickerInput(
                     inputId = ns("country"),
                     label = "Choose country",
                     choices = sort(unique(data$Country)),
@@ -38,7 +35,7 @@ server <- function(id,data){
                         `actions-box` = TRUE
                     )
                 ),
-                # shiny::dateRangeInput(
+                # dateRangeInput(
                 #     inputId = ns("period"),
                 #     label = "Choose period",
                 #     min = min(data$InvoiceDate),
@@ -46,19 +43,18 @@ server <- function(id,data){
                 #     start=c(max(data$InvoiceDate) %m-% months(6)),
                 #     end=max(data$InvoiceDate)
                 # ),
-                shiny::selectInput(
+                selectInput(
                     inputId = ns("format"),
                     label = "Select File Format",
                     choices = sort(c("CSV"="csv","Excel"="xlsx"))
                 ),
             )
         })
-        data2 <- shiny::reactive({
+        data2 <- reactive({
+            req(input$country)  
             data |>
-                
-                # dplyr::filter(InvoiceDate >= input$period[1] & InvoiceDate <= input$period[2]) |>
-                # dplyr::filter(Country == input$country)
-                dplyr::filter(Country == "Belgium")
+                # filter(InvoiceDate >= input$period[1] & InvoiceDate <= input$period[2]) |>
+                filter(Country == input$country)
         })
         return(data2)
         }

@@ -6,7 +6,8 @@ box::use(
           renderUI, 
           tags, 
           uiOutput],
-    bslib[page_fluid,
+    bslib[bs_theme,
+          page_fluid,
           navset_card_pill,
           sidebar,
           nav_panel,
@@ -30,54 +31,54 @@ box::use(app/view/reactable)
 #' @export
 ui <- function(id) {
     ns <- NS(id)
-    bslib::page_fluid(
-        waiter::useWaiter(),
-        waiter::waiterPreloader(),
+    page_fluid(
+        useWaiter(),
+        waiterPreloader(),
         # app title ----
-        shiny::titlePanel("Business-Oriented Dashboard"),
+        titlePanel("Business-Oriented Dashboard"),
         # theme
-        theme = bslib::bs_theme(
+        theme = bs_theme(
             bootswatch = "flatly",
             version = "5"),
         # sidebar layout with input and output definitions ----
-        bslib::navset_card_pill(
-            sidebar = bslib::sidebar(
+        navset_card_pill(
+            sidebar = sidebar(
                 sidebar$ui(ns("sidebar1"))
             ),
-            bslib::nav_panel(
+            nav_panel(
                 title = "Visualizations",
-                bslib::layout_column_wrap(
+                layout_column_wrap(
                     width = "400px",
-                    bslib::card(bslib::card_header("Plotly - Sales Trends"),
+                    card(card_header("Plotly - Sales Trends"),
                          full_screen = T,
-                         bslib::card_body(shinycssloaders::withSpinner(
+                         card_body(withSpinner(
                              plotly$ui(ns("chart1")),
                              type = 7))
                     ),
-                    bslib::card(bslib::card_header("Highcharter - Top Products"),
+                    card(card_header("Highcharter - Top Products"),
                          full_screen = T,
-                         bslib::card_body(shinycssloaders::withSpinner(
+                         card_body(withSpinner(
                              highcharter$ui(ns("chart2")),
                              type = 7))
                     ),
                 )
             ),
-            bslib::nav_panel(
+            nav_panel(
                 title = "DT",
-                bslib::card(
-                    bslib::card_header("DT - Interactive Transaction Table"),
+                card(
+                    card_header("DT - Interactive Transaction Table"),
                     full_screen = T,
-                    bslib::card_body(shinycssloaders::withSpinner(
+                    card_body(withSpinner(
                         dt$ui(ns("table1")),
                         type = 7))
                 )
             ),
-            bslib::nav_panel(
+            nav_panel(
                 title = "Reactable",
-                bslib::card(
-                    bslib::card_header("Reactable - Customer Insights"),
+                card(
+                    card_header("Reactable - Customer Insights"),
                     full_screen = T,
-                    bslib::card_body(shinycssloaders::withSpinner(
+                    card_body(withSpinner(
                         reactable$ui(ns("table2")),
                         type = 7))
                 )
