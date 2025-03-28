@@ -26,9 +26,6 @@ box::use(app/view/dt)
 box::use(app/view/reactable)
 
 
-data_orig <- rio::import("app/data/cleaned_data.csv")
-
-
 # Define UI --------------------Country# Define UI ---------------------------------------------------------------
 #' @export
 ui <- function(id) {
@@ -93,11 +90,12 @@ ui <- function(id) {
 #' @export
 server <- function(id){
     moduleServer(id, function(input,output,session){
-        data <- sidebar$server("sidebar1","app/data/cleaned_data.csv")
-        plotly$server("chart1",data)
-        highcharter$server("chart2",data)
-        dt$server("table1",data)
-        reactable$server("table2",data)
+        data <- rio::import("app/data/cleaned_data.csv")
+        data2 <- sidebar$server("sidebar1",data) 
+        plotly$server("chart1",data2)
+        highcharter$server("chart2",data2)
+        dt$server("table1",data2)
+        reactable$server("table2",data2)
         }
     )
 }
