@@ -11,10 +11,8 @@ box::use(
           navset_card_pill,
           sidebar,
           nav_panel,
-          card,
-          card_header,
-          card_body,
-          layout_column_wrap],
+          layout_column_wrap
+          ],
     shinycssloaders[withSpinner],
     waiter[useWaiter,
            waiterPreloader]
@@ -49,39 +47,17 @@ ui <- function(id) {
                 title = "Visualizations",
                 layout_column_wrap(
                     width = "400px",
-                    card(card_header("Plotly - Sales Trends"),
-                         full_screen = T,
-                         card_body(withSpinner(
-                             plotly$ui(ns("chart1")),
-                             type = 7))
-                    ),
-                    card(card_header("Highcharter - Top Products"),
-                         full_screen = T,
-                         card_body(withSpinner(
-                             highcharter$ui(ns("chart2")),
-                             type = 7))
-                    ),
+                    plotly$ui(ns("chart1")),
+                    highcharter$ui(ns("chart2"))
                 )
             ),
             nav_panel(
                 title = "DT",
-                card(
-                    card_header("DT - Interactive Transaction Table"),
-                    full_screen = T,
-                    card_body(withSpinner(
-                        dt$ui(ns("table1")),
-                        type = 7))
-                )
+                dt$ui(ns("table1")),
             ),
             nav_panel(
                 title = "Reactable",
-                card(
-                    card_header("Reactable - Customer Insights"),
-                    full_screen = T,
-                    card_body(withSpinner(
-                        reactable$ui(ns("table2")),
-                        type = 7))
-                )
+                reactable$ui(ns("table2"))
             )
         )
     )

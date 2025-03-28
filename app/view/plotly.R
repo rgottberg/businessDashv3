@@ -9,13 +9,24 @@ box::use(
     dplyr[mutate,
           group_by,
           summarize],
-    lubridate[month]
+    lubridate[month],
+    bslib[sidebar,
+          card,
+          card_header,
+          card_body,
+          layout_column_wrap],
+    shinycssloaders[withSpinner],
 )
 
 #' @export
 ui <- function(id){
     ns <- shiny::NS(id)
-    plotlyOutput(ns("chart"))
+    card(card_header("Plotly - Sales Trends"),
+         full_screen = T,
+         card_body(withSpinner(
+             plotlyOutput(ns("chart")),
+             type = 7))
+    )
 }
 
 #' @export

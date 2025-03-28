@@ -3,13 +3,26 @@ box::use(
           NS],
     DT[dataTableOutput,
        renderDataTable,
-       datatable]
+       datatable],
+    bslib[sidebar,
+          card,
+          card_header,
+          card_body,
+          layout_column_wrap],
+    shinycssloaders[withSpinner],
     )
+
 
 #' @export
 ui <- function(id){
     ns <- NS(id)
-    dataTableOutput(ns("table"))
+    card(
+        card_header("DT - Interactive Transaction Table"),
+        full_screen = T,
+        card_body(withSpinner(
+            dataTableOutput(ns("table")),
+            type = 7))
+    )
 }
 
 #' @export

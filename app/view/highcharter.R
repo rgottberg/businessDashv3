@@ -12,13 +12,24 @@ box::use(
     dplyr[group_by,
           summarize,
           arrange,
-          slice_head]
+          slice_head],
+    bslib[sidebar,
+          card,
+          card_header,
+          card_body,
+          layout_column_wrap],
+    shinycssloaders[withSpinner],
 )
 
 #' @export
 ui <- function(id){
     ns <- NS(id)
-    highchartOutput(ns("chart"))
+    card(card_header("Highcharter - Top Products"),
+         full_screen = T,
+         card_body(withSpinner(
+             highchartOutput(ns("chart")),
+             type = 7))
+    )
 }
 
 #' @export
