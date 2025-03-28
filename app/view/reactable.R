@@ -4,13 +4,25 @@ box::use(
           reactive],
     reactable[reactableOutput,
               renderReactable,
-              reactable]
+              reactable],
+    bslib[sidebar,
+          card,
+          card_header,
+          card_body,
+          layout_column_wrap],
+    shinycssloaders[withSpinner],
 )
 
 #' @export
 ui <- function(id){
     ns <- NS(id)
-    reactableOutput(ns("table"))
+    card(
+        card_header("Reactable - Customer Insights"),
+        full_screen = T,
+        card_body(withSpinner(
+            reactableOutput(ns("table")),
+            type = 7))
+    )
 }
 
 #' @export
