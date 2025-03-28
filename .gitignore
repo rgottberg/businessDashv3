@@ -1,3 +1,9 @@
+.Rprofile
+*.Rproj
+.renvignore
+.rscignore
+/renv
+
 # History files
 .Rhistory
 .Rapp.history
